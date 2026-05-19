@@ -1,326 +1,127 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>EduAventura: El Camino del Sabio (Completo)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    :root {
-        --bg-default: linear-gradient(135deg, #e0f2fe, #f0f9ff);
-        --bg-matematicas: #e3f2fd;
-        --bg-espanol: #fffde7;
-        --bg-ingles: #ffebee;
-        --bg-ciencias: #f1f8e9;
-        --oro: #f59e0b;
-    }
-
-    body { 
-        margin:0; font-family:'Segoe UI', sans-serif; background: var(--bg-default);
-        min-height:100vh; display:flex; justify-content:center; align-items:center; 
-        transition: background 0.8s ease; position: relative;
-    }
-
-    body::before {
-        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        opacity: 0.05; pointer-events: none;
-        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 86c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm66-3c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM37 17c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm54 46c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM52 4c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm-8 47c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
-    }
-
-    .pantalla{ display:none; animation: fadeIn 0.4s ease; position: relative; z-index: 1; }
-    .activa{ display:block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .card{ background:rgba(255, 255, 255, 0.95); width:480px; max-width:95%; padding:30px; border-radius:30px; text-align:center; box-shadow:0 15px 35px rgba(0,0,0,0.1); position: relative; }
-    
-    .puntos-box {
-        position: absolute; top: -15px; right: 20px; background: var(--oro);
-        color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;
-        box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); border: 2px solid white;
-    }
-
-    .buho{ width:100px; margin:10px 0; animation: flotar 3s infinite ease-in-out; }
-    @keyframes flotar{ 0%, 100%{ transform: translateY(0); } 50%{ transform: translateY(-10px); } }
-
-    .btn{ margin-top:10px; width:100%; padding:12px; border:none; border-radius:25px; font-size:16px; cursor:pointer; transition:0.3s; background: #4facfe; color: white; font-weight: bold; box-shadow: 0 4px 0 #3a8ed4; }
-    .btn:hover{ transform:translateY(-2px); box-shadow: 0 6px 0 #3a8ed4; }
-    
-    ul li{ background:#fff; border: 2px solid #e2e8f0; margin:10px 0; padding:15px; border-radius:20px; color:#444; cursor:pointer; transition: 0.3s; font-weight: bold; list-style: none; }
-    ul li.completado { background: #dcfce7 !important; color: #166534 !important; border-color: #86efac !important; cursor: default; }
-
-    .opcion{ background:#fff; margin:10px 0; padding:14px; border-radius:15px; cursor:pointer; transition: 0.2s; border: 2px solid #eee; text-align: left; color: #444; }
-    .correcta{ background:#dcfce7 !important; color:#166534 !important; border-color: #86efac !important; }
-    .incorrecta{ background:#fee2e2 !important; color:#991b1b !important; border-color: #fca5a5 !important; }
-
-    .barra-cont{ width:100%; background:#f1f5f9; height:10px; border-radius:20px; margin: 15px 0; overflow: hidden; }
-    .progreso{ height:100%; width:0%; background:#4facfe; transition:0.5s; }
-
-    .popup{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index: 100; backdrop-filter: blur(5px); }
-    .badge{ background: #fef9c3; color: #854d0e; padding: 5px 15px; border-radius: 15px; font-size: 13px; font-weight: 800; margin-bottom: 10px; display: inline-block; }
-</style>
+  <meta charset="UTF-8">
+  <title>Bingo App</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<audio id="sndCorrecto" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
-<audio id="sndError" src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
+<h1>🎰 BINGO ROYER</h1>
 
-<div id="inicio" class="pantalla activa">
-    <div class="card">
-        <h1 style="font-size:35px; margin:10px 0;">🦉 EduAventura</h1>
-        <img class="buho" src="https://cdn-icons-png.flaticon.com/512/3069/3069172.png">
-        <input type="text" id="nombreJugador" style="width:85%; padding:12px; border-radius:25px; border:2px solid #ddd; text-align:center;" placeholder="¿Cómo te llamas?">
-        <button class="btn" onclick="irAGrados()">¡Comenzar!</button>
-        <button class="btn" style="background:#94a3b8; box-shadow: 0 4px 0 #64748b;" onclick="mostrarPantalla('instrucciones')">📖 Instrucciones</button>
+<!-- REGISTRO -->
+<div id="register" class="screen register">
+  <div class="register-box">
+
+    <h2>Bienvenido</h2>
+    <p class="subtitle">Ingresa tu nombre</p>
+
+    <div class="input-group">
+      <input type="text" id="playerName" required>
+      <label>Nombre</label>
     </div>
+
+    <button onclick="goToInstructions()">
+      Entrar
+    </button>
+
+  </div>
 </div>
 
-<div id="instrucciones" class="pantalla">
-    <div class="card">
-        <h2>📖 Cómo jugar</h2>
-        <p style="text-align: left; line-height: 1.6; color: #64748b;">
-            • Selecciona tu grado.<br>
-            • Resuelve las 4 materias de tu nivel.<br>
-            • <b>Puntos:</b> 10 si aciertas a la primera, 5 a la segunda.<br>
-            • Si fallas una vez, ¡tienes un segundo intento!<br>
-            • Al terminar las 4 materias, subirás de nivel (Bajo → Medio → Alto).
-        </p>
-        <button class="btn" onclick="mostrarPantalla('inicio')">¡Entendido!</button>
-    </div>
+<!-- INSTRUCCIONES -->
+<div id="instructions" class="screen instructions hidden">
+
+  <div class="card">
+
+    <h2>📜 Instrucciones</h2>
+
+    <p><strong>1.</strong> Ingresa tu nombre para iniciar el juego.</p>
+
+    <p><strong>2.</strong> Se generará automáticamente tu cartón con columnas B, I, N, G y O.</p>
+
+    <p><strong>3.</strong> Los números se anunciarán automáticamente en pantalla y por voz.</p>
+
+    <p><strong>4.</strong> Haz clic en los números cuando coincidan.</p>
+
+    <p><strong>5.</strong> Gana completando una línea horizontal, vertical o diagonal.</p>
+
+    <button onclick="startGame()">
+      Comenzar Juego
+    </button>
+
+  </div>
 </div>
 
-<div id="grados" class="pantalla">
-    <div class="card">
-        <h2>🎒 Selecciona tu Grado</h2>
-        <ul>
-            <li onclick="seleccionarGrado(1)">1er GRADO</li>
-            <li onclick="seleccionarGrado(3)">3er GRADO</li>
-            <li onclick="seleccionarGrado(5)">5to GRADO</li>
-        </ul>
-        <button class="btn" style="background:#94a3b8; box-shadow: 0 4px 0 #64748b;" onclick="mostrarPantalla('inicio')">Atrás</button>
+<!-- JUEGO -->
+<div id="gameSection" class="screen game hidden">
+
+  <div class="top-bar">
+    <h3 id="welcome"></h3>
+    <h2 id="current">--</h2>
+  </div>
+
+  <div class="game-area">
+
+    <!-- TABLERO -->
+    <div id="board">
+
+      <div class="header">B</div>
+      <div class="header">I</div>
+      <div class="header">N</div>
+      <div class="header">G</div>
+      <div class="header">O</div>
+
     </div>
+
+    <!-- PANEL -->
+    <div class="side-panel">
+
+      <h3>Historial</h3>
+
+      <div id="history"></div>
+
+    </div>
+
+  </div>
+
+  <!-- BOLA -->
+  <div id="ball">--</div>
+
+  <h2 id="message"></h2>
+
+  <button onclick="resetGame()">
+    Reiniciar
+  </button>
+
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+  </audio>
+
+  <audio id="popSound">
+    <source src="https://www.soundjay.com/button/beep-07.wav">
+  </audio>
+
 </div>
 
-<div id="materias" class="pantalla">
-    <div class="card">
-        <div class="puntos-box">⭐ <span id="puntosMenu">0</span></div>
-        <div id="lvlBadge" class="badge">Nivel: BAJO</div>
-        <h2 id="saludoH2"></h2>
-        <ul id="listaMaterias">
-            <li id="mat-matematicas">🔢 Matemáticas</li>
-            <li id="mat-espanol">✍️ Español</li>
-            <li id="mat-ingles">🌍 Inglés</li>
-            <li id="mat-ciencias">🧪 Ciencias</li>
-        </ul>
-    </div>
+<!-- PANTALLA BINGO -->
+<div id="bingoScreen" class="hidden">
+
+  <div class="bingo-content">
+
+    <h1>🎉 BINGO 🎉</h1>
+
+    <p>¡Felicidades!</p>
+
+    <button onclick="closeBingo()">
+      Continuar
+    </button>
+
+  </div>
+
 </div>
 
-<div id="preguntas" class="pantalla">
-    <div class="card">
-        <div class="puntos-box">Puntos: <span id="puntosJuego">0</span></div>
-        <h3 id="txtMateria" style="margin:0; color:#4facfe; text-transform: uppercase;"></h3>
-        <div class="barra-cont"><div id="progresoBarra" class="progreso"></div></div>
-        <p id="txtPregunta" style="font-size: 20px; font-weight: bold; min-height: 60px;"></p>
-        <div id="opcionesCont"></div>
-    </div>
-</div>
+<script src="script.js"></script>
 
-<div id="popup" class="popup">
-    <div class="card" style="width: 300px;">
-        <div id="iconoPopup" style="font-size: 50px;">✨</div>
-        <p id="msgPopup" style="font-size: 18px; font-weight: 500;"></p>
-        <button id="btnNext" class="btn">Continuar</button>
-    </div>
-</div>
-
-<script>
-let nombreU = "", gradoU = 0, nivelU = "BAJO", materiaU = "", completadas = [], indexQ = 0, intentos = 0, puntaje = 0;
-
-const ESTILOS = { 'matematicas': '#e3f2fd', 'espanol': '#fffde7', 'ingles': '#ffebee', 'ciencias': '#f1f8e9', 'default': 'linear-gradient(135deg, #e0f2fe, #f0f9ff)' };
-
-const DB = {
-    1: {
-        "BAJO": {
-            matematicas: [{p:"¿1+1?", r:["1","2","3","4"], c:1},{p:"¿2+2?", r:["2","3","4","5"], c:2},{p:"¿5-2?", r:["1","2","3","4"], c:2},{p:"¿3+1?", r:["3","4","5","6"], c:1},{p:"¿4-1?", r:["1","2","3","4"], c:2}],
-            espanol: [{p:"¿Cuál es animal?", r:["Mesa","Perro","Azul","Casa"], c:1},{p:"¿Cuál es vocal?", r:["B","C","A","D"], c:2},{p:"¿Qué es una casa?", r:["Animal","Lugar de vida","Color","Comida"], c:1},{p:"¿Qué es correr?", r:["Objeto","Acción","Animal","Color"], c:1},{p:"¿Cuál es objeto?", r:["Mesa","Perro","Saltar","Feliz"], c:0}],
-            ingles: [{p:"Dog es:", r:["Gato","Perro","Casa","Libro"], c:1},{p:"Cat es:", r:["Perro","Gato","Mesa","Azul"], c:1},{p:"Hello es:", r:["Adiós","Hola","Gracias","No"], c:1},{p:"Book es:", r:["Libro","Casa","Perro","Mesa"], c:0},{p:"Red es:", r:["Verde","Azul","Rojo","Negro"], c:2}],
-            ciencias: [{p:"El sol da:", r:["Agua","Luz y calor","Piedra","Aire"], c:1},{p:"Perro es:", r:["Objeto","Animal","Planta","Color"], c:1},{p:"El agua es:", r:["Sólida","Líquida","Gas","Metal"], c:1},{p:"Para ver:", r:["Ojos","Manos","Pies","Boca"], c:0},{p:"Respirar:", r:["Agua","Aire","Fuego","Tierra"], c:1}]
-        },
-        "MEDIO": {
-            matematicas: [{p:"¿10+5?", r:["12","14","15","16"], c:2},{p:"¿6+3?", r:["7","8","9","10"], c:2},{p:"¿8-2?", r:["4","5","6","7"], c:2},{p:"¿7+2?", r:["8","9","10","11"], c:1},{p:"¿9-3?", r:["4","5","6","7"], c:2}],
-            espanol: [{p:"¿Plural de niño?", r:["Niñes","Niños","Niñoes","Ninos"], c:1},{p:"Feliz es:", r:["Verbo","Adjetivo","Sustantivo","Animal"], c:1},{p:"Correr es:", r:["Verbo","Objeto","Color","Lugar"], c:0},{p:"Acción:", r:["Mesa","Correr","Casa","Azul"], c:1},{p:"Sustantivo:", r:["Bonito","Escuela","Rápido","Feliz"], c:1}],
-            ingles: [{p:"School:", r:["Casa","Escuela","Mesa","Libro"], c:1},{p:"Water:", r:["Fuego","Agua","Aire","Tierra"], c:1},{p:"Apple:", r:["Pera","Manzana","Uva","Banana"], c:1},{p:"Teacher:", r:["Profesor","Estudiante","Casa","Libro"], c:0},{p:"House:", r:["Casa","Perro","Mesa","Libro"], c:0}],
-            ciencias: [{p:"Plantas necesitan:", r:["Agua y luz","Solo tierra","Solo aire","Piedra"], c:0},{p:"Peces viven:", r:["Tierra","Agua","Aire","Fuego"], c:1},{p:"Ser vivo:", r:["Mesa","Perro","Silla","Piedra"], c:1},{p:"Sol produce:", r:["Frío","Luz y calor","Agua","Aire"], c:1},{p:"Las plantas:", r:["Caminan","Crecen","Saltan","Corren"], c:1}]
-        },
-        "ALTO": {
-            matematicas: [{p:"¿15+5?", r:["18","19","20","21"], c:2},{p:"¿12-4?", r:["6","7","8","9"], c:2},{p:"¿11+8?", r:["18","19","20","21"], c:1},{p:"¿14-6?", r:["6","7","8","8"], c:3},{p:"¿9+9?", r:["16","17","18","19"], c:2}],
-            espanol: [{p:"Sinónimo de feliz:", r:["Triste","Alegre","Lento","Bajo"], c:1},{p:"Antónimo de alto:", r:["Grande","Bajo","Largo","Fuerte"], c:1},{p:"Oración correcta:", r:["el perro corre","corre perro el","El perro corre","perro el corre"], c:2},{p:"¿Adjetivo?", r:["Acción","Describe algo","Lugar","Animal"], c:1},{p:"¿Sustantivo?", r:["Acción","Nombre de algo","Color","Verbo"], c:1}],
-            ingles: [{p:"Beautiful:", r:["Feo","Bonito","Lento","Pequeño"], c:1},{p:"Important:", r:["Importante","Rápido","Lento","Débil"], c:0},{p:"Happy:", r:["Feliz","Triste","Bajo","Alto"], c:0},{p:"Big:", r:["Grande","Pequeño","Lento","Débil"], c:0},{p:"Small:", r:["Grande","Pequeño","Alto","Fuerte"], c:1}],
-            ciencias: [{p:"Fotosíntesis:", r:["Movimiento","Alimento planta","Sonido","Agua"], c:1},{p:"Ecosistema:", r:["Casa","Seres y entorno","Mesa","Piedra"], c:1},{p:"Gravedad:", r:["Luz","Atracción terrestre","Agua","Aire"], c:1},{p:"El sol es:", r:["Frío","Fuente energía","Piedra","Gas"], c:1},{p:"Animales:", r:["Agua y comida","Solo tierra","Solo luz","Piedra"], c:0}]
-        }
-    },
-    3: {
-        "BAJO": {
-            matematicas: [{p:"50+50",r:["80","100","120"],c:1},{p:"10-7",r:["3","4","5"],c:0},{p:"2x5",r:["8","10","12"],c:1},{p:"Mitad de 20",r:["5","10","15"],c:1},{p:"15+15",r:["20","30","40"],c:1}],
-            espanol: [{p:"Sustantivo común",r:["Pedro","Perro","México"],c:1},{p:"Sinónimo de saltar",r:["Brincar","Correr","Dormir"],c:0},{p:"Es un verbo",r:["Casa","Azul","Cantar"],c:2},{p:"Rima con gato",r:["Pato","Perro","Lobo"],c:0},{p:"Signo de pregunta",r:["!","?","."],c:1}],
-            ingles: [{p:"Blue es",r:["Rojo","Azul","Verde"],c:1},{p:"Brother",r:["Madre","Padre","Hermano"],c:2},{p:"Apple",r:["Manzana","Pera","Uva"],c:0},{p:"One, Two...",r:["Four","Three","Five"],c:1},{p:"Dog",r:["Gato","Perro","Lobo"],c:1}],
-            ciencias: [{p:"Animal mamífero",r:["Pez","Vaca","Loro"],c:1},{p:"Estado del hielo",r:["Líquido","Sólido","Gaseoso"],c:1},{p:"Nace de huevo",r:["Perro","Gato","Gallina"],c:2},{p:"Sentido del gusto",r:["Oído","Lengua","Nariz"],c:1},{p:"Es un planeta",r:["Sol","Tierra","Luna"],c:1}]
-        },
-        "MEDIO": {
-            matematicas: [{p:"25+25",r:["40","50","60"],c:1},{p:"100-50",r:["40","50","60"],c:1},{p:"3x4",r:["10","12","14"],c:1},{p:"9x2",r:["16","18","20"],c:1},{p:"40+10",r:["40","50","60"],c:1}],
-            espanol: [{p:"Antónimo de frío",r:["Helado","Caliente","Tibio"],c:1},{p:"Sustantivo propio",r:["casa","Juan","árbol"],c:1},{p:"Articulo femenino",r:["El","La","Los"],c:1},{p:"Punto final",r:["Sigue","Termina","Duda"],c:1},{p:"Letra mayúscula",r:["a","B","c"],c:1}],
-            ingles: [{p:"Yellow",r:["Azul","Amarillo","Rojo"],c:1},{p:"Sister",r:["Hermana","Madre","Tía"],c:0},{p:"Run",r:["Correr","Comer","Dormir"],c:0},{p:"Pencil",r:["Pluma","Lápiz","Mesa"],c:1},{p:"Ten",r:["5","10","15"],c:1}],
-            ciencias: [{p:"Parte de planta",r:["Hueso","Raíz","Pelo"],c:1},{p:"Animal omnívoro",r:["León","Cerdo","Vaca"],c:1},{p:"El sol es",r:["Planeta","Estrella","Satélite"],c:1},{p:"Agua en nubes",r:["Sólido","Líquido","Gas"],c:2},{p:"Es un insecto",r:["Hormiga","Araña","Lombriz"],c:0}]
-        },
-        "ALTO": {
-            matematicas: [{p:"12x2",r:["22","24","26"],c:1},{p:"200-100",r:["50","100","150"],c:1},{p:"500+500",r:["900","1000","1100"],c:1},{p:"80/2",r:["30","40","50"],c:1},{p:"10x5",r:["40","50","60"],c:1}],
-            espanol: [{p:"Esdrújula",r:["Cárcel","Pájaro","Mamá"],c:1},{p:"Sujeto oración",r:["El niño","corre","rápido"],c:0},{p:"Adjetivo",r:["Saltar","Bonito","Mesa"],c:1},{p:"Pretérito",r:["Pasado","Futuro","Ahora"],c:0},{p:"Signo exclamación",r:["?","!",","],c:1}],
-            ingles: [{p:"Kitchen",r:["Sala","Cocina","Baño"],c:1},{p:"Beautiful",r:["Feo","Hermoso","Bajo"],c:1},{p:"Always",r:["Nunca","Siempre","A veces"],c:1},{p:"Understand",r:["Comer","Entender","Ir"],c:1},{p:"Wednesday",r:["Lunes","Miércoles","Viernes"],c:1}],
-            ciencias: [{p:"Esqueleto sirve",r:["Comer","Sostener","Ver"],c:1},{p:"Atmósfera es",r:["Agua","Aire","Tierra"],c:1},{p:"Satélite natural",r:["Sol","Luna","Marte"],c:1},{p:"Fuerza atracción",r:["Gravedad","Luz","Calor"],c:0},{p:"Ciclo del agua",r:["Solo lluvia","Evaporación","Solo mar"],c:1}]
-        }
-    },
-    5: {
-        "BAJO": {
-            matematicas: [{p:"125+125",r:["200","250","300"],c:1},{p:"100x5",r:["400","500","600"],c:1},{p:"90-45",r:["35","45","55"],c:1},{p:"8x8",r:["56","64","72"],c:1},{p:"Mitad de 500",r:["200","250","300"],c:1}],
-            espanol: [{p:"Sinónimo de veloz",r:["Lento","Rápido","Bajo"],c:1},{p:"Es un pronombre",r:["Él","Casa","Saltar"],c:0},{p:"Uso de coma",r:["Preguntar","Separar","Terminar"],c:1},{p:"Sílaba tónica",r:["La débil","La fuerte","Ninguna"],c:1},{p:"Género neutro",r:["El","La","Lo"],c:2}],
-            ingles: [{p:"White",r:["Negro","Blanco","Gris"],c:1},{p:"Mother",r:["Tía","Madre","Abuela"],c:1},{p:"Teacher",r:["Maestro","Alumno","Libro"],c:0},{p:"School",r:["Casa","Escuela","Parque"],c:1},{p:"Green",r:["Rojo","Azul","Verde"],c:2}],
-            ciencias: [{p:"Célula es",r:["Unidad vida","Una piedra","Un gas"],c:0},{p:"Sistema óseo",r:["Músculos","Huesos","Nervios"],c:1},{p:"Es energía",r:["Luz","Madera","Hierro"],c:0},{p:"Aparato digestivo",r:["Respirar","Comer","Ver"],c:1},{p:"Planeta rojo",r:["Venus","Marte","Júpiter"],c:1}]
-        },
-        "MEDIO": {
-            matematicas: [{p:"1000/4",r:["200","250","300"],c:1},{p:"12x12",r:["124","144","164"],c:1},{p:"0.5 + 0.5",r:["1","1.5","2"],c:0},{p:"3/4 de 100",r:["50","75","80"],c:1},{p:"15x3",r:["35","45","55"],c:1}],
-            espanol: [{p:"Es un hiato",r:["Cielo","Miedo","Teatro"],c:2},{p:"Sujeto tácito",r:["Se ve","No se ve","Es largo"],c:1},{p:"Adverbio tiempo",r:["Aquí","Hoy","Mucho"],c:1},{p:"Conjunción",r:["Y","Casa","Rojo"],c:0},{p:"Objeto directo",r:["¿Qué?","¿Quién?","¿Cómo?"],c:0}],
-            ingles: [{p:"Yesterday",r:["Hoy","Ayer","Mañana"],c:1},{p:"Always",r:["Nunca","Siempre","Poco"],c:1},{p:"Better",r:["Mal","Mejor","Igual"],c:1},{p:"Under",r:["Sobre","Debajo","Lejos"],c:1},{p:"Drink",r:["Comer","Beber","Dormir"],c:1}],
-            ciencias: [{p:"Fotosíntesis",r:["Respirar","Alimento planta","Crecer"],c:1},{p:"Ecosistema",r:["Solo plantas","Seres y medio","Solo clima"],c:1},{p:"Materia es",r:["Espacio/masa","Solo luz","Nada"],c:0},{p:"Sistema solar",r:["8 planetas","9 planetas","10 planetas"],c:0},{p:"Luz viaja en",r:["Círculos","Línea recta","Curvas"],c:1}]
-        },
-        "ALTO": {
-            matematicas: [{p:"Raíz de 81",r:["7","8","9"],c:2},{p:"Área cuadrado 5x5",r:["20","25","30"],c:1},{p:"10% de 200",r:["10","20","30"],c:1},{p:"2 elevado a 3",r:["6","8","9"],c:1},{p:"0.25 en fracción",r:["1/2","1/4","1/8"],c:1}],
-            espanol: [{p:"Metáfora es",r:["Realidad","Comparación","Figura"],c:2},{p:"Voz pasiva",r:["Acción recibe","Acción hace","No hay"],c:0},{p:"Crónica es",r:["Cuento","Relato tiempo","Poema"],c:1},{p:"Prefijo 'Anti'",r:["Antes","Contra","Después"],c:1},{p:"Sufijo 'Mente'",r:["Lugar","Modo","Tiempo"],c:1}],
-            ingles: [{p:"Will go",r:["Pasado","Futuro","Presente"],c:1},{p:"Environment",r:["Ciudad","Ambiente","Casa"],c:1},{p:"Knowledge",r:["Libro","Conocimiento","Saber"],c:1},{p:"Health",r:["Riqueza","Salud","Fuerza"],c:1},{p:"Believe",r:["Comer","Creer","Ver"],c:1}],
-            ciencias: [{p:"Gravedad",r:["Repele","Atrae","Nada"],c:1},{p:"ADN es",r:["Energía","Info genética","Un gas"],c:1},{p:"Evolución",r:["Darwin","Newton","Einstein"],c:0},{p:"Átomo",r:["Unidad materia","Un planeta","Una célula"],c:0},{p:"Biodiversidad",r:["Pocas especies","Muchas especies","Nada"],c:1}]
-        }
-    }
-};
-
-function mostrarPantalla(id) {
-    document.querySelectorAll(".pantalla").forEach(p => p.classList.remove("activa"));
-    document.getElementById(id).classList.add("activa");
-    if(id !== 'preguntas') document.body.style.background = ESTILOS.default;
-}
-
-function irAGrados() {
-    nombreU = document.getElementById("nombreJugador").value.trim();
-    if(!nombreU) return alert("Escribe tu nombre.");
-    document.getElementById("saludoH2").innerText = "¡Hola, " + nombreU + "!";
-    mostrarPantalla('grados');
-}
-
-function seleccionarGrado(g) {
-    gradoU = g; nivelU = "BAJO"; completadas = []; puntaje = 0;
-    actualizarMapa(); mostrarPantalla('materias');
-}
-
-function actualizarMapa() {
-    document.getElementById("puntosMenu").innerText = puntaje;
-    document.getElementById("lvlBadge").innerText = "Nivel: " + nivelU;
-    const mats = ["matematicas", "espanol", "ingles", "ciencias"];
-    mats.forEach(m => {
-        const li = document.getElementById("mat-" + m);
-        if(completadas.includes(m)) {
-            li.classList.add("completado"); li.innerText = m.toUpperCase() + " ✅"; li.onclick = null;
-        } else {
-            li.classList.remove("completado");
-            li.innerText = (m==="espanol"?"✍️ Español":m==="matematicas"?"🔢 Matemáticas":m==="ingles"?"🌍 Inglés":"🧪 Ciencias");
-            li.onclick = () => iniciarMateria(m);
-        }
-    });
-}
-
-function iniciarMateria(m) {
-    materiaU = m; indexQ = 0;
-    document.body.style.background = ESTILOS[m];
-    document.getElementById("txtMateria").innerText = m;
-    document.getElementById("puntosJuego").innerText = puntaje;
-    mostrarPantalla('preguntas');
-    cargarPregunta();
-}
-
-function cargarPregunta() {
-    intentos = 0;
-    const lista = DB[gradoU][nivelU][materiaU];
-    if(!lista[indexQ]) { finalizarMateria(); return; }
-    const q = lista[indexQ];
-    document.getElementById("txtPregunta").innerText = q.p;
-    const cont = document.getElementById("opcionesCont");
-    cont.innerHTML = "";
-    q.r.forEach((txt, i) => {
-        const d = document.createElement("div");
-        d.className = "opcion";
-        d.innerText = String.fromCharCode(65+i) + ") " + txt;
-        d.onclick = () => evaluar(i);
-        cont.appendChild(d);
-    });
-    document.getElementById("progresoBarra").style.width = ((indexQ+1)/lista.length)*100 + "%";
-}
-
-function evaluar(i) {
-    const q = DB[gradoU][nivelU][materiaU][indexQ];
-    const ops = document.querySelectorAll(".opcion");
-    if(i === q.c) {
-        let ganancia = (intentos === 0) ? 10 : 5;
-        puntaje += ganancia;
-        document.getElementById("puntosJuego").innerText = puntaje;
-        ops[i].classList.add("correcta");
-        document.getElementById("sndCorrecto").play();
-        lanzarPopup("¡Correcto! +" + ganancia + " pts", false);
-    } else {
-        if(intentos === 0) {
-            intentos++;
-            ops[i].classList.add("incorrecta");
-            document.getElementById("sndError").play();
-            lanzarPopup("Incorrecto. ¡Último intento por 5 pts!", false, true);
-        } else {
-            ops[q.c].classList.add("correcta");
-            document.getElementById("sndError").play();
-            lanzarPopup("La respuesta era la " + String.fromCharCode(65+q.c), false);
-        }
-    }
-}
-
-function lanzarPopup(msg, esFinMat, esReintento=false) {
-    document.getElementById("msgPopup").innerText = msg;
-    document.getElementById("popup").style.display = "flex";
-    document.getElementById("iconoPopup").innerText = esReintento ? "🤔" : (esFinMat ? "🏆" : "✨");
-    document.getElementById("btnNext").onclick = () => {
-        document.getElementById("popup").style.display = "none";
-        if(esReintento) return;
-        if(esFinMat) revisarSubida();
-        else { indexQ++; cargarPregunta(); }
-    };
-}
-
-function finalizarMateria() {
-    if(!completadas.includes(materiaU)) completadas.push(materiaU);
-    actualizarMapa(); lanzarPopup("¡Materia superada! Puntos: " + puntaje, true);
-}
-
-function revisarSubida() {
-    if(completadas.length === 4) {
-        if(nivelU === "BAJO") { 
-            nivelU = "MEDIO"; completadas = []; 
-            actualizarMapa();
-            lanzarPopup("¡Subiste al nivel MEDIO!", false); 
-            mostrarPantalla('materias'); 
-        }
-        else if(nivelU === "MEDIO") { 
-            nivelU = "ALTO"; completadas = []; 
-            actualizarMapa();
-            lanzarPopup("¡Llegaste al nivel ALTO!", false); 
-            mostrarPantalla('materias'); 
-        }
-        else { 
-            lanzarPopup("¡GRADUADO! Puntaje Final: " + puntaje, false); 
-            setTimeout(()=>location.reload(), 4000); 
-        }
-    } else mostrarPantalla('materias');
-}
-</script>
 </body>
 </html>
