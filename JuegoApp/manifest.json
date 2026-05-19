@@ -1,20 +1,345 @@
-{
-  "name": "EduAventura",
-  "short_name": "EduAventura",
-  "start_url": "index.html",
-  "display": "standalone",
-  "background_color": "#2196f3",
-  "theme_color": "#2196f3",
-  "icons": [
-    {
-      "src": "img/icono-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "img/icono-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+let player = "";
+let called = [];
+let interval;
+let boardNumbers = [];
+
+const ranges = {
+  B:[1,15],
+  I:[16,30],
+  N:[31,45],
+  G:[46,60],
+  O:[61,75]
+};
+
+// VOZ
+function speak(text){
+
+  let s = new SpeechSynthesisUtterance(text);
+
+  s.lang = "es-ES";
+  s.volume = 1;
+  s.rate = 0.85;
+  s.pitch = 1;
+
+  speechSynthesis.speak(s);
+}
+
+// CAMBIO DE PANTALLA
+function changeScreen(from, to){
+
+  document.getElementById(from)
+  .classList.add("hidden");
+
+  document.getElementById(to)
+  .classList.remove("hidden");
+}
+
+// REGISTRO
+function goToInstructions(){
+
+  let name =
+  document.getElementById("playerName")
+  .value.trim();
+
+  if(!name){
+    return alert("Ingresa tu nombre");
+  }
+
+  player = name;
+
+  changeScreen("register","instructions");
+}
+
+// INICIAR
+function startGame(){
+
+  changeScreen("instructions","gameSection");
+
+  document.getElementById("welcome")
+  .textContent = "Jugador: " + player;
+
+  generateBoard();
+
+  let music =
+  document.getElementById("bgMusic");
+
+  music.volume = 0.15;
+
+  music.play().catch(()=>{});
+
+  interval = setInterval(drawNumber, 4000);
+}
+
+// TABLERO
+function generateBoard(){
+
+  let board =
+  document.getElementById("board");
+
+  document.querySelectorAll(".cell")
+  .forEach(c => c.remove());
+
+  boardNumbers = [];
+
+  let cols = ["B","I","N","G","O"];
+
+  cols.forEach(col => {
+
+    let nums = [];
+
+    while(nums.length < 5){
+
+      let n =
+      Math.floor(
+      Math.random() *
+      (ranges[col][1] - ranges[col][0] + 1)
+      ) + ranges[col][0];
+
+      if(!nums.includes(n)){
+        nums.push(n);
+      }
     }
-  ]
+
+    nums.forEach((num,i)=>{
+
+      let cell =
+      document.createElement("div");
+
+      cell.className = "cell";
+
+      if(col === "N" && i === 2){
+
+        cell.textContent = "FREE";
+
+        cell.classList.add("marked");
+
+      } else {
+
+        cell.textContent = num;
+
+        boardNumbers.push(num);
+
+        cell.onclick = () => {
+
+          cell.classList.toggle("marked");
+
+          checkBingo();
+        };
+      }
+
+      board.appendChild(cell);
+    });
+  });
+}
+
+// NÚMEROS
+function drawNumber(){
+
+  let letters =
+  Object.keys(ranges);
+
+  let useBoard =
+  Math.random() < 0.6;
+
+  let letter, num;
+
+  if(useBoard){
+
+    num =
+    boardNumbers[
+      Math.floor(
+      Math.random() *
+      boardNumbers.length
+      )
+    ];
+
+    for(let l in ranges){
+
+      if(
+        num >= ranges[l][0] &&
+        num <= ranges[l][1]
+      ){
+        letter = l;
+      }
+    }
+
+  } else {
+
+    letter =
+    letters[
+      Math.floor(Math.random()*5)
+    ];
+
+    num =
+    Math.floor(
+      Math.random() *
+      (ranges[letter][1] - ranges[letter][0] + 1)
+    ) + ranges[letter][0];
+  }
+
+  if(called.includes(letter + num)){
+    return drawNumber();
+  }
+
+  called.push(letter + num);
+
+  let text =
+  letter + "-" + num;
+
+  document.getElementById("current")
+  .textContent = text;
+
+  document.getElementById("ball")
+  .textContent = num;
+
+  // HISTORIAL
+  let div =
+  document.createElement("div");
+
+  div.textContent = text;
+
+  document.getElementById("history")
+  .prepend(div);
+
+  document.getElementById("popSound")
+  .play();
+
+  let music =
+  document.getElementById("bgMusic");
+
+  music.volume = 0.05;
+
+  speechSynthesis.cancel();
+
+  speak(letter + ", " + num);
+
+  setTimeout(()=>{
+
+    music.volume = 0.15;
+
+  },2000);
+}
+
+// BINGO
+function checkBingo(){
+
+  let cells =
+  document.querySelectorAll(".cell");
+
+  let bingo = false;
+
+  // FILAS
+  for(let i=0; i<5; i++){
+
+    let complete = true;
+
+    for(let j=0; j<5; j++){
+
+      let index = (i*5)+j;
+
+      if(
+        !cells[index]
+        .classList.contains("marked")
+      ){
+        complete = false;
+      }
+    }
+
+    if(complete){
+      bingo = true;
+    }
+  }
+
+  // COLUMNAS
+  for(let j=0; j<5; j++){
+
+    let complete = true;
+
+    for(let i=0; i<5; i++){
+
+      let index = (i*5)+j;
+
+      if(
+        !cells[index]
+        .classList.contains("marked")
+      ){
+        complete = false;
+      }
+    }
+
+    if(complete){
+      bingo = true;
+    }
+  }
+
+  // DIAGONAL 1
+  let diag1 = true;
+
+  for(let i=0; i<5; i++){
+
+    let index = (i*5)+i;
+
+    if(
+      !cells[index]
+      .classList.contains("marked")
+    ){
+      diag1 = false;
+    }
+  }
+
+  if(diag1){
+    bingo = true;
+  }
+
+  // DIAGONAL 2
+  let diag2 = true;
+
+  for(let i=0; i<5; i++){
+
+    let index = (i*5)+(4-i);
+
+    if(
+      !cells[index]
+      .classList.contains("marked")
+    ){
+      diag2 = false;
+    }
+  }
+
+  if(diag2){
+    bingo = true;
+  }
+
+  // GANADOR
+  if(bingo){
+
+    clearInterval(interval);
+
+    document.getElementById("message")
+    .textContent = "🎉 BINGO 🎉";
+
+    document.getElementById("bingoScreen")
+    .classList.remove("hidden");
+
+    speechSynthesis.cancel();
+
+    speak("BINGO, felicidades " + player);
+
+    let music =
+    document.getElementById("bgMusic");
+
+    music.volume = 0.03;
+  }
+}
+
+// CERRAR PANTALLA
+function closeBingo(){
+
+  document.getElementById("bingoScreen")
+  .classList.add("hidden");
+}
+
+// REINICIAR
+function resetGame(){
+  location.reload();
 }
